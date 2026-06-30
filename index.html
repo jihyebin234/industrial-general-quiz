@@ -326,6 +326,28 @@
       gap: 12px;
     }
 
+    .quiz-stage {
+      display: grid;
+      gap: 14px;
+    }
+
+    .quiz-topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 0.95rem;
+    }
+
+    .quiz-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
     .question {
       border: 1px solid var(--line);
       border-radius: 8px;
@@ -377,6 +399,11 @@
       width: 18px;
       height: 18px;
       accent-color: var(--blue);
+    }
+
+    .choice.selected {
+      border-color: #82aaf1;
+      background: var(--blue-soft);
     }
 
     .text-answer {
@@ -617,8 +644,8 @@
           <div class="metric"><strong id="doneText">0/0</strong><span>채점 완료</span></div>
         </div>
         <div class="progress"><div class="bar" id="progressBar"></div></div>
-        <button class="btn primary" id="checkAll">전체 채점</button>
-        <button class="btn ghost" id="resetQuiz">다시 풀기</button>
+        <button class="btn primary" id="checkAll">문제 섞기</button>
+        <button class="btn ghost" id="resetQuiz">처음부터 다시</button>
       </aside>
     </section>
 
@@ -833,7 +860,19 @@
       { id: 45, type: "short", q: "구매 관리의 5대 적정 요소 중 제품의 규격과 성능이 요구 수준에 부합하는지를 의미하는 것은?", answer: "적정 품질", note: "적정 품질은 요구 수준에 맞는 규격과 성능을 뜻한다." },
       { id: 46, type: "choice", q: "원통 좌표형 로봇의 특징으로 옳은 것은?", choices: ["허리처럼 옆으로 회전한다", "가로, 세로, 높이 직선 이동만 한다", "모든 방향을 관절로 자유롭게 움직인다", "자재를 먼저 입고된 순서대로 출고한다"], answer: "허리처럼 옆으로 회전한다", note: "원통 좌표형 로봇은 회전 운동을 포함한다." },
       { id: 47, type: "choice", q: "극 좌표형 로봇의 설명으로 가장 알맞은 것은?", choices: ["팔이 대포의 포신처럼 움직이며 동작 영역이 넓다", "작업물 저장만 담당한다", "기업 전체 자원을 통합 관리한다", "소품종 대량 생산 라인 배치만 의미한다"], answer: "팔이 대포의 포신처럼 움직이며 동작 영역이 넓다", note: "극 좌표형 로봇은 동작 영역이 넓고 점용접 등에 이용될 수 있다." },
-      { id: 48, type: "choice", q: "공정도를 사용하는 이유로 알맞은 것은?", choices: ["작업, 검사, 운반, 저장, 정체 등 공정 흐름을 파악하기 위해", "판매 가격만 정하기 위해", "기업 회계만 처리하기 위해", "로봇 이름만 외우기 위해"], answer: "작업, 검사, 운반, 저장, 정체 등 공정 흐름을 파악하기 위해", note: "공정도는 공정 기호를 통해 작업 흐름과 대기, 저장, 이동을 나타낸다." }
+      { id: 48, type: "choice", q: "공정도를 사용하는 이유로 알맞은 것은?", choices: ["작업, 검사, 운반, 저장, 정체 등 공정 흐름을 파악하기 위해", "판매 가격만 정하기 위해", "기업 회계만 처리하기 위해", "로봇 이름만 외우기 위해"], answer: "작업, 검사, 운반, 저장, 정체 등 공정 흐름을 파악하기 위해", note: "공정도는 공정 기호를 통해 작업 흐름과 대기, 저장, 이동을 나타낸다." },
+      { id: 49, type: "choice", q: "포드 시스템의 특징으로 모두 알맞은 것은?", choices: ["생산관리 3S, 대량 생산, 이동 조립법", "구매 관리, 선입 선출법, 적정 품질", "CAD, CAM, ERP만 해당", "공정별 배치, 단속 생산, 주문 생산"], answer: "생산관리 3S, 대량 생산, 이동 조립법", note: "포드 시스템은 이동 조립법을 통해 대량 생산의 기틀을 마련했다." },
+      { id: 50, type: "ox", q: "ERP는 기업 전체의 인적, 물적 자원을 통합하여 관리하는 전사적 자원 관리 시스템이다.", answer: "O", note: "ERP는 기업 내 경영 활동 정보를 공유하고 통합 관리한다." },
+      { id: 51, type: "choice", q: "CAD와 CAM의 연결로 옳은 것은?", choices: ["CAD-설계, CAM-제조 및 가공", "CAD-구매 관리, CAM-납기 준수", "CAD-재고 최소화, CAM-적정 품질", "CAD-운반, CAM-정체"], answer: "CAD-설계, CAM-제조 및 가공", note: "CAD는 컴퓨터 이용 설계, CAM은 컴퓨터 이용 제조이다." },
+      { id: 52, type: "short", q: "필요한 만큼 생산하고 재고를 최소화하며 낭비를 제거하는 방식은?", answer: "JIT", note: "적시 생산 방식 JIT는 토요타 시스템과 관련된다." },
+      { id: 53, type: "ox", q: "계획 생산은 자동화된 전용 설비를 이용하고 자재 대량 구매로 생산 원가를 낮게 유지할 수 있다.", answer: "O", note: "계획 생산은 예측 생산, 기성품, 대량 생산과 관련된다." },
+      { id: 54, type: "choice", q: "주문 생산 제품의 예로만 묶인 것은?", choices: ["선박, 항공기, 건물", "구두, 운동화, 양말", "셔츠, 장갑, 양말", "구두, 건물, 양말"], answer: "선박, 항공기, 건물", note: "선박, 항공기, 건물은 고객 요구에 맞춰 생산하는 주문 생산 예시이다." },
+      { id: 55, type: "choice", q: "제품별 배치와 공정별 배치의 비교로 옳은 것은?", choices: ["제품별 배치는 라인 흐름 중심, 공정별 배치는 유사 설비 중심", "제품별 배치는 항상 다품종 소량, 공정별 배치는 항상 소품종 대량", "둘 다 기계 고장 시 항상 전체 공장이 멈춘다", "둘 다 작업자 숙련도가 전혀 필요 없다"], answer: "제품별 배치는 라인 흐름 중심, 공정별 배치는 유사 설비 중심", note: "제품별 배치는 생산 라인 흐름에 따라, 공정별 배치는 유사 기능 설비를 모아 배치한다." },
+      { id: 56, type: "short", q: "공장 자동화에서 정해진 경로를 따라 부품이나 재료를 이동시키는 장치는?", answer: "무인 운반차", note: "무인 운반차는 자동 또는 수동으로 물건을 적재해 이동할 수 있다." },
+      { id: 57, type: "choice", q: "생산 관리의 설명으로 가장 알맞은 것은?", choices: ["원자재가 공장에 들어와 완제품이 되어 나갈 때까지의 전체 흐름 관리", "회사의 홍보 문구만 관리", "로봇 좌표계만 암기", "완제품 판매 후 광고만 담당"], answer: "원자재가 공장에 들어와 완제품이 되어 나갈 때까지의 전체 흐름 관리", note: "생산 관리는 생산 과정 전체의 흐름을 관리한다." },
+      { id: 58, type: "ox", q: "단순화는 불필요한 품목을 줄여 가짓수를 단순하게 만드는 활동이다.", answer: "O", note: "단순화는 3S 중 하나이며 품목 수를 줄여 관리와 생산을 쉽게 한다." },
+      { id: 59, type: "choice", q: "표준화의 설명으로 옳은 것은?", choices: ["제품의 크기, 형태, 품질 등을 일정 기준에 맞추어 통일", "동일 동작 반복으로 피로도만 높이는 활동", "먼저 입고된 자재를 먼저 출고", "설계부터 판매까지 정보를 연결"], answer: "제품의 크기, 형태, 품질 등을 일정 기준에 맞추어 통일", note: "표준화는 제품 규격과 품질을 일정 기준에 맞추는 원칙이다." },
+      { id: 60, type: "choice", q: "기업 A와 B의 노동 생산성을 비교할 때 옳은 것은?", choices: ["A가 B보다 높다", "B가 A보다 높다", "둘 다 100%이다", "비교할 수 없다"], answer: "A가 B보다 높다", note: "기업 A는 60%, 기업 B는 25%이므로 A가 더 높다." }
     ];
 
     const quizList = document.querySelector("#quizList");
@@ -846,6 +885,9 @@
     const answers = new Map(JSON.parse(localStorage.getItem(storageKey) || "[]"));
     let currentFilter = "all";
     let currentSearch = "";
+    let quizQueue = [];
+    let currentIndex = 0;
+    let currentChecked = false;
 
     function normalize(value) {
       return String(value || "").trim().replace(/\s+/g, "").toLowerCase();
@@ -869,49 +911,69 @@
       });
     }
 
-    function renderQuiz(filter = currentFilter) {
-      currentFilter = filter;
-      quizList.innerHTML = "";
-      const visibleQuestions = getVisibleQuestions();
+    function shuffleItems(items) {
+      const shuffled = [...items];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled;
+    }
 
-      if (!visibleQuestions.length) {
+    function buildQueue(filter = currentFilter) {
+      currentFilter = filter;
+      quizQueue = shuffleItems(getVisibleQuestions());
+      currentIndex = 0;
+      currentChecked = false;
+      renderQuiz();
+    }
+
+    function renderQuiz() {
+      quizList.innerHTML = "";
+
+      if (!quizQueue.length) {
         quizList.innerHTML = `<div class="empty">조건에 맞는 문제가 없어. 검색어를 바꾸거나 전체 문제를 눌러봐.</div>`;
         return;
       }
 
-      visibleQuestions.forEach((item) => {
-          const card = document.createElement("article");
-          card.className = "question";
-          card.dataset.type = item.type;
-          card.dataset.id = item.id;
+      const item = quizQueue[currentIndex];
+      const label = item.type === "choice" ? "객관식" : item.type === "ox" ? "OX" : "단답형";
+      const saved = answers.has(item.id);
+      const savedCorrect = answers.get(item.id);
+      const feedbackText = saved
+        ? `${savedCorrect ? "정답!" : `오답. 정답은 "${item.answer}"이야.`} ${item.note}`
+        : "";
+      const feedbackClass = saved ? `feedback show ${savedCorrect ? "good" : "bad"}` : "feedback";
+      const choices = item.type === "short"
+        ? `<input class="text-answer" aria-label="답 입력" placeholder="정답 입력" ${saved ? "disabled" : ""}>`
+        : `<div class="choices">${(item.type === "ox" ? ["O", "X"] : item.choices).map((choice) => `
+            <label class="choice">
+              <input type="radio" name="q-${item.id}" value="${choice}" ${saved ? "disabled" : ""}>
+              <span>${choice}</span>
+            </label>`).join("")}</div>`;
 
-          const label = item.type === "choice" ? "객관식" : item.type === "ox" ? "OX" : "단답형";
-          const saved = answers.has(item.id);
-          const savedCorrect = answers.get(item.id);
-          const savedFeedback = saved
-            ? `<div class="feedback show ${savedCorrect ? "good" : "bad"}" id="feedback-${item.id}">${savedCorrect ? "정답!" : `오답. 정답은 "${item.answer}"이야.`} ${item.note}</div>`
-            : `<div class="feedback" id="feedback-${item.id}"></div>`;
-          const choices = item.type === "short"
-            ? `<input class="text-answer" aria-label="답 입력" placeholder="정답 입력">`
-            : `<div class="choices">${(item.type === "ox" ? ["O", "X"] : item.choices).map((choice) => `
-                <label class="choice">
-                  <input type="radio" name="q-${item.id}" value="${choice}">
-                  <span>${choice}</span>
-                </label>`).join("")}</div>`;
-
-          card.innerHTML = `
+      currentChecked = saved;
+      quizList.innerHTML = `
+        <div class="quiz-stage">
+          <div class="quiz-topline">
+            <span>랜덤 문제 ${currentIndex + 1} / ${quizQueue.length}</span>
+            <span>원래 번호 ${item.id}</span>
+          </div>
+          <article class="question" data-type="${item.type}" data-id="${item.id}">
             <div class="question-header">
               <h3>${item.id}. ${item.q}</h3>
               <span class="tag">${label}</span>
             </div>
             ${choices}
-            <div style="display:flex; gap:8px; margin-top:12px; flex-wrap:wrap;">
-              <button class="btn primary" data-check="${item.id}">정답 확인</button>
+            <div class="quiz-actions">
+              <button class="btn primary" data-check="${item.id}" ${saved ? "disabled" : ""}>정답 확인</button>
+              <button class="btn ghost" data-next ${currentIndex >= quizQueue.length - 1 ? "disabled" : ""}>다음 문제</button>
+              <button class="btn ghost" data-reroll>문제 섞기</button>
             </div>
-            ${savedFeedback}
-          `;
-          quizList.appendChild(card);
-        });
+            <div class="${feedbackClass}" id="feedback-${item.id}">${feedbackText}</div>
+          </article>
+        </div>
+      `;
       renderMistakes();
     }
 
@@ -933,13 +995,34 @@
       const correct = normalize(userAnswer) === normalize(item.answer);
       answers.set(Number(id), correct);
       saveProgress();
+      currentChecked = true;
       feedback.className = `feedback show ${correct ? "good" : "bad"}`;
       feedback.textContent = correct
         ? `정답! ${item.note}`
         : `아쉬워. 정답은 "${item.answer}"이야. ${item.note}`;
+      document.querySelectorAll(`.question[data-id="${id}"] input`).forEach((input) => input.disabled = true);
+      const checkButton = document.querySelector(`[data-check="${id}"]`);
+      if (checkButton) checkButton.disabled = true;
       updateScore();
       renderMistakes();
       return correct;
+    }
+
+    function nextQuestion() {
+      if (!currentChecked) {
+        const item = quizQueue[currentIndex];
+        const feedback = document.querySelector(`#feedback-${item.id}`);
+        if (feedback) {
+          feedback.className = "feedback show bad";
+          feedback.textContent = "먼저 정답 확인을 눌러야 다음 문제로 넘어갈 수 있어.";
+        }
+        return;
+      }
+      if (currentIndex < quizQueue.length - 1) {
+        currentIndex += 1;
+        currentChecked = answers.has(quizQueue[currentIndex].id);
+        renderQuiz();
+      }
     }
 
     function updateScore() {
@@ -979,33 +1062,42 @@
       const tab = event.target.closest("[data-section]");
       const jump = event.target.closest("[data-jump]");
       const filter = event.target.closest("[data-filter]");
+      const nextButton = event.target.closest("[data-next]");
+      const rerollButton = event.target.closest("[data-reroll]");
+      const choice = event.target.closest(".choice");
 
       if (checkButton) checkQuestion(checkButton.dataset.check);
       if (tab) showSection(tab.dataset.section);
       if (jump) showSection(jump.dataset.jump);
-      if (filter) renderQuiz(filter.dataset.filter);
+      if (filter) buildQueue(filter.dataset.filter);
+      if (nextButton) nextQuestion();
+      if (rerollButton) buildQueue();
+      if (choice) {
+        const group = choice.closest(".choices");
+        if (group) {
+          group.querySelectorAll(".choice").forEach((item) => item.classList.remove("selected"));
+          choice.classList.add("selected");
+        }
+      }
     });
 
     searchInput.addEventListener("input", (event) => {
       currentSearch = event.target.value;
-      renderQuiz();
+      buildQueue();
     });
 
     document.querySelector("#checkAll").addEventListener("click", () => {
-      questions.forEach((item) => {
-        const visible = document.querySelector(`.question[data-id="${item.id}"]`);
-        if (visible) checkQuestion(item.id);
-      });
+      buildQueue();
     });
 
     document.querySelector("#resetQuiz").addEventListener("click", () => {
       answers.clear();
       saveProgress();
-      renderQuiz();
+      buildQueue("all");
       updateScore();
     });
 
-    renderQuiz();
+    buildQueue();
     renderMistakes();
     updateScore();
   </script>
