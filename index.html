@@ -355,6 +355,17 @@
       padding: 16px;
     }
 
+    .question-context {
+      margin: 0 0 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+      padding: 14px;
+      color: var(--ink);
+      line-height: 1.65;
+      white-space: pre-line;
+    }
+
     .question-header {
       display: flex;
       align-items: flex-start;
@@ -672,6 +683,7 @@
               <button class="btn ghost" data-filter="choice">객관식</button>
               <button class="btn ghost" data-filter="ox">OX</button>
               <button class="btn ghost" data-filter="short">단답형</button>
+              <button class="btn ghost" data-filter="exam">수능형</button>
               <button class="btn ghost" data-filter="wrong">틀린 문제</button>
             </div>
           </div>
@@ -872,7 +884,19 @@
       { id: 57, type: "choice", q: "생산 관리의 설명으로 가장 알맞은 것은?", choices: ["원자재가 공장에 들어와 완제품이 되어 나갈 때까지의 전체 흐름 관리", "회사의 홍보 문구만 관리", "로봇 좌표계만 암기", "완제품 판매 후 광고만 담당"], answer: "원자재가 공장에 들어와 완제품이 되어 나갈 때까지의 전체 흐름 관리", note: "생산 관리는 생산 과정 전체의 흐름을 관리한다." },
       { id: 58, type: "ox", q: "단순화는 불필요한 품목을 줄여 가짓수를 단순하게 만드는 활동이다.", answer: "O", note: "단순화는 3S 중 하나이며 품목 수를 줄여 관리와 생산을 쉽게 한다." },
       { id: 59, type: "choice", q: "표준화의 설명으로 옳은 것은?", choices: ["제품의 크기, 형태, 품질 등을 일정 기준에 맞추어 통일", "동일 동작 반복으로 피로도만 높이는 활동", "먼저 입고된 자재를 먼저 출고", "설계부터 판매까지 정보를 연결"], answer: "제품의 크기, 형태, 품질 등을 일정 기준에 맞추어 통일", note: "표준화는 제품 규격과 품질을 일정 기준에 맞추는 원칙이다." },
-      { id: 60, type: "choice", q: "기업 A와 B의 노동 생산성을 비교할 때 옳은 것은?", choices: ["A가 B보다 높다", "B가 A보다 높다", "둘 다 100%이다", "비교할 수 없다"], answer: "A가 B보다 높다", note: "기업 A는 60%, 기업 B는 25%이므로 A가 더 높다." }
+      { id: 60, type: "choice", q: "기업 A와 B의 노동 생산성을 비교할 때 옳은 것은?", choices: ["A가 B보다 높다", "B가 A보다 높다", "둘 다 100%이다", "비교할 수 없다"], answer: "A가 B보다 높다", note: "기업 A는 60%, 기업 B는 25%이므로 A가 더 높다." },
+      { id: 61, type: "exam", q: "위 사례에 나타난 생산 혁신 활동으로 가장 적절한 것은?", context: "A사는 부품 재고를 쌓아두지 않기 위해 협력 업체로부터 필요한 부품을 생산 라인 가동 직전에 공급받는 체계를 만들었다. 그 결과 창고 관리 비용과 재고 부담이 크게 줄었다.", choices: ["ERP", "JIT", "CAD", "제품별 배치", "선입 선출법"], answer: "JIT", note: "필요한 만큼, 필요한 때에 공급받아 재고와 낭비를 줄이는 방식은 JIT이다." },
+      { id: 62, type: "exam", q: "A 공장에 가장 적합한 생산 시스템 배치와 그 이유로 옳은 것은?", context: "A 공장은 한 종류의 제품을 매우 많이 생산한다. 생산 라인은 제품이 만들어지는 순서대로 이어져 있으며, 자동화 설비 도입이 쉽다. 다만 한 설비가 고장 나면 전체 라인에 영향을 준다.", choices: ["제품별 배치 - 소품종 대량 생산에 적합", "공정별 배치 - 공정별 재고가 적다", "프로젝트 생산 - 동일 제품 반복 생산에 적합", "주문 생산 - 전용 설비가 필요 없다", "개별 생산 - 전체 라인 정지가 없다"], answer: "제품별 배치 - 소품종 대량 생산에 적합", note: "제품별 배치는 생산 라인의 흐름에 따라 설비를 배치하고 소품종 대량 생산에 적합하다." },
+      { id: 63, type: "exam", q: "B 공장에 대한 설명으로 가장 적절한 것은?", context: "B 공장은 다양한 제품을 생산한다. 선반, 밀링 머신, 용접 장비처럼 기능이 비슷한 설비를 한곳에 모아 두고, 제품마다 필요한 공정 순서에 따라 부품을 이동시킨다.", choices: ["제품별 배치이며 자동화 전용 설비만 사용한다", "공정별 배치이며 제품 변화에 융통성 있게 대처할 수 있다", "포드 시스템이며 이동 조립법만 사용한다", "계획 생산이며 재고가 전혀 필요 없다", "JIT이며 모든 작업 대기가 사라진다"], answer: "공정별 배치이며 제품 변화에 융통성 있게 대처할 수 있다", note: "유사 기능 설비를 모아 두고 공정 순서에 따라 이동시키는 방식은 공정별 배치이다." },
+      { id: 64, type: "exam", q: "위 사례에서 ㉠에 들어갈 시스템으로 가장 적절한 것은?", context: "C사는 영업, 생산, 구매, 회계 부서가 각각 따로 관리하던 정보를 하나의 시스템에서 공유하게 했다. 이 시스템은 기업 전체의 인적·물적 자원을 통합 관리한다.", choices: ["CAD", "CAM", "ERP", "FMS", "CIM"], answer: "ERP", note: "기업 전체의 인적, 물적 자원을 통합 관리하는 전사적 자원 관리 시스템은 ERP이다." },
+      { id: 65, type: "exam", q: "㉠과 ㉡에 들어갈 시스템을 바르게 연결한 것은?", context: "D사는 컴퓨터로 제품 도면을 작성하는 ㉠을 도입했다. 이후 설계 데이터를 바탕으로 컴퓨터가 제조 및 가공을 지원하는 ㉡까지 연결했다.", choices: ["㉠ CAD, ㉡ CAM", "㉠ CAM, ㉡ CAD", "㉠ ERP, ㉡ JIT", "㉠ FMS, ㉡ 선입 선출법", "㉠ CIM, ㉡ 구매 관리"], answer: "㉠ CAD, ㉡ CAM", note: "CAD는 설계, CAM은 설계 데이터를 바탕으로 한 제조 및 가공이다." },
+      { id: 66, type: "exam", q: "다음 자료를 통해 알 수 있는 기업 A와 B의 노동 생산성 비교로 옳은 것은?", context: "기업 A: 작업자 10명, 하루 총 생산량 60개, 작업자 1인당 표준 생산량 10개\n기업 B: 작업자 20명, 하루 총 생산량 100개, 작업자 1인당 표준 생산량 20개", choices: ["A는 60%, B는 25%이므로 A가 높다", "A는 25%, B는 60%이므로 B가 높다", "A와 B는 모두 100%이다", "A는 600%, B는 500%이다", "작업자 수가 많으므로 B가 무조건 높다"], answer: "A는 60%, B는 25%이므로 A가 높다", note: "A: 60 ÷ (10×10)×100 = 60%, B: 100 ÷ (20×20)×100 = 25%이다." },
+      { id: 67, type: "exam", q: "위 상황에서 가장 적절한 자재 관리 원칙은?", context: "창고에 보관 중인 자재 일부는 오래 보관하면 변질될 수 있다. 담당자는 먼저 입고된 자재부터 먼저 출고해 자재의 노후화와 변질을 방지하려고 한다.", choices: ["후입 선출법", "선입 선출법", "전문화", "적정 품질", "통합화"], answer: "선입 선출법", note: "먼저 입고된 자재를 먼저 출고하는 방법은 선입 선출법이다." },
+      { id: 68, type: "exam", q: "다음 설명에 해당하는 로봇을 고르면?", context: "이 로봇은 팔이 대포의 포신처럼 움직인다. 동작 영역이 넓고, 사각 방향 작업이 쉬워 점용접 등에 이용될 수 있다.", choices: ["직각 좌표형 로봇", "원통 좌표형 로봇", "극 좌표형 로봇", "수직 관절형 로봇", "무인 운반차"], answer: "극 좌표형 로봇", note: "팔이 대포 포신처럼 움직이는 것은 극 좌표형 로봇의 특징이다." },
+      { id: 69, type: "exam", q: "공장 자동화 단계 중 위 사례에 해당하는 가장 상위 단계는?", context: "E 공장은 제품 설계, 생산, 관리, 마케팅 정보를 실시간으로 공유한다. 각 정보는 서로 연결되어 생산 계획과 자재 흐름을 최적화하는 데 활용된다.", choices: ["개별화", "단순화", "통합화", "정체", "검사"], answer: "통합화", note: "공장 자동화의 가장 상위 단계인 통합화는 정보의 실시간 공유와 최적화가 핵심이다." },
+      { id: 70, type: "exam", q: "위 사례에서 구매 관리의 핵심 활동으로 가장 적절한 것은?", context: "F사는 제품 생산에 필요한 원자재를 안정적으로 확보하기 위해 여러 공급원을 비교했다. 품질, 가격, 납기 조건을 따져 가장 유리한 조건의 공급처를 선택했다.", choices: ["생산 원자재를 유리한 조건으로 확보하는 활동", "공정 기호를 암기하는 활동", "로봇 좌표계를 분류하는 활동", "완제품 광고 문구를 작성하는 활동", "불필요한 품목을 늘리는 활동"], answer: "생산 원자재를 유리한 조건으로 확보하는 활동", note: "구매 관리는 생산에 필요한 원자재를 적절한 공급원으로부터 유리한 조건으로 확보하는 활동이다." },
+      { id: 71, type: "exam", q: "다음 사례가 설명하는 생산 방식으로 가장 알맞은 것은?", context: "G사는 소비자의 다양한 취향에 맞추기 위해 여러 종류의 제품을 조금씩 생산한다. 한 가지 제품을 대량으로만 생산하기보다 다양한 욕구에 대응하는 데 초점을 둔다.", choices: ["다품종 소량 생산", "소품종 대량 생산", "선입 선출법", "적정 품질", "공정별 저장"], answer: "다품종 소량 생산", note: "여러 종류의 제품을 조금씩 생산하는 방식은 다품종 소량 생산이다." },
+      { id: 72, type: "exam", q: "위 글의 ㉠에 해당하는 생산 관리 목표는?", context: "최근 시장 변화가 빨라지고 소비자 요구가 다양해졌다. 이에 따라 기업은 수요 변동에 맞춰 생산 수량을 빠르게 조절할 수 있어야 한다. 이 능력을 ㉠이라고 한다.", choices: ["표준화", "전문화", "유연성", "검사", "정체"], answer: "유연성", note: "수요 변동에 따라 생산 수량을 빠르게 조절하는 능력은 유연성이다." }
     ];
 
     const quizList = document.querySelector("#quizList");
@@ -937,7 +961,7 @@
       }
 
       const item = quizQueue[currentIndex];
-      const label = item.type === "choice" ? "객관식" : item.type === "ox" ? "OX" : "단답형";
+      const label = item.type === "choice" ? "객관식" : item.type === "ox" ? "OX" : item.type === "exam" ? "수능형" : "단답형";
       const saved = answers.has(item.id);
       const savedCorrect = answers.get(item.id);
       const feedbackText = saved
@@ -964,10 +988,11 @@
               <h3>${item.id}. ${item.q}</h3>
               <span class="tag">${label}</span>
             </div>
+            ${item.context ? `<div class="question-context">${item.context}</div>` : ""}
             ${choices}
             <div class="quiz-actions">
               <button class="btn primary" data-check="${item.id}" ${saved ? "disabled" : ""}>정답 확인</button>
-              <button class="btn ghost" data-next ${currentIndex >= quizQueue.length - 1 ? "disabled" : ""}>다음 문제</button>
+              <button class="btn ghost" data-next ${currentIndex >= quizQueue.length - 1 ? "disabled" : ""}>채점하고 다음</button>
               <button class="btn ghost" data-reroll>문제 섞기</button>
             </div>
             <div class="${feedbackClass}" id="feedback-${item.id}">${feedbackText}</div>
@@ -992,6 +1017,11 @@
       if (!item || !feedback) return false;
 
       const userAnswer = getAnswer(id);
+      if (!normalize(userAnswer)) {
+        feedback.className = "feedback show bad";
+        feedback.textContent = "답을 선택하거나 입력한 뒤 넘어가면 자동으로 채점돼.";
+        return false;
+      }
       const correct = normalize(userAnswer) === normalize(item.answer);
       answers.set(Number(id), correct);
       saveProgress();
@@ -1011,12 +1041,8 @@
     function nextQuestion() {
       if (!currentChecked) {
         const item = quizQueue[currentIndex];
-        const feedback = document.querySelector(`#feedback-${item.id}`);
-        if (feedback) {
-          feedback.className = "feedback show bad";
-          feedback.textContent = "먼저 정답 확인을 눌러야 다음 문제로 넘어갈 수 있어.";
-        }
-        return;
+        const graded = checkQuestion(item.id);
+        if (!graded && !answers.has(item.id)) return;
       }
       if (currentIndex < quizQueue.length - 1) {
         currentIndex += 1;
