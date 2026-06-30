@@ -1,0 +1,952 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>공업일반 기말 퀴즈</title>
+  <style>
+    :root {
+      --ink: #172033;
+      --muted: #667085;
+      --line: #d9e1ef;
+      --paper: #f7f9fc;
+      --white: #ffffff;
+      --blue: #1769e0;
+      --blue-soft: #e9f1ff;
+      --red: #d92d20;
+      --red-soft: #fff0ed;
+      --green: #078653;
+      --yellow: #b54708;
+      --shadow: 0 18px 50px rgba(23, 32, 51, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 12% 8%, rgba(23, 105, 224, 0.12), transparent 24rem),
+        linear-gradient(180deg, #edf4ff 0%, #f7f9fc 32%, #ffffff 100%);
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .app {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 56px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      border-radius: 8px;
+      color: white;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--blue), #0f9f6e);
+      box-shadow: var(--shadow);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: clamp(1.35rem, 2.4vw, 2.1rem);
+      letter-spacing: 0;
+    }
+
+    .brand p {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .pill-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .pill {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--white);
+      color: var(--muted);
+      padding: 8px 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+      gap: 18px;
+      align-items: stretch;
+      margin-bottom: 18px;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.86);
+      box-shadow: var(--shadow);
+    }
+
+    .intro {
+      padding: 26px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .intro h2 {
+      max-width: 780px;
+      margin: 0 0 10px;
+      font-size: clamp(1.6rem, 3.5vw, 3rem);
+      line-height: 1.1;
+      letter-spacing: 0;
+    }
+
+    .intro p {
+      max-width: 680px;
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .quick-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      padding: 0 14px;
+      font-weight: 800;
+      color: var(--ink);
+      background: var(--white);
+    }
+
+    .btn.primary {
+      color: white;
+      background: var(--blue);
+    }
+
+    .btn.danger {
+      color: white;
+      background: var(--red);
+    }
+
+    .btn.ghost {
+      border-color: var(--line);
+    }
+
+    .factory-visual {
+      margin-top: 24px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #101828;
+      overflow: hidden;
+    }
+
+    .factory-visual svg {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .score-panel {
+      padding: 20px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+      padding: 14px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 1.7rem;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .progress {
+      height: 12px;
+      border-radius: 999px;
+      background: #e6ebf4;
+      overflow: hidden;
+    }
+
+    .bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--blue), var(--green));
+      transition: width 0.25s ease;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 14px;
+      padding: 14px;
+    }
+
+    .tab-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .tab {
+      width: 100%;
+      min-height: 44px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--ink);
+      text-align: left;
+      padding: 0 12px;
+      font-weight: 800;
+    }
+
+    .tab.active {
+      background: var(--blue-soft);
+      border-color: #b8d1ff;
+      color: #0f4fb0;
+    }
+
+    .tip-card {
+      margin-top: 14px;
+      border-radius: 8px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      background: var(--white);
+    }
+
+    .tip-card h3 {
+      margin: 0 0 6px;
+      font-size: 1rem;
+    }
+
+    .tip-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 0.92rem;
+    }
+
+    main {
+      min-width: 0;
+    }
+
+    .section {
+      display: none;
+      padding: 20px;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .section h2 {
+      margin: 0;
+      font-size: 1.35rem;
+    }
+
+    .filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .quiz-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .question {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--white);
+      padding: 16px;
+    }
+
+    .question-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .question h3 {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .tag {
+      flex: 0 0 auto;
+      border-radius: 999px;
+      padding: 5px 9px;
+      background: var(--paper);
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 900;
+    }
+
+    .choices {
+      display: grid;
+      gap: 8px;
+    }
+
+    .choice {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      min-height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+      padding: 10px 12px;
+    }
+
+    .choice input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--blue);
+    }
+
+    .text-answer {
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 12px;
+      background: var(--paper);
+    }
+
+    .feedback {
+      display: none;
+      margin-top: 12px;
+      border-radius: 8px;
+      padding: 10px 12px;
+      line-height: 1.5;
+      font-weight: 700;
+    }
+
+    .feedback.show {
+      display: block;
+    }
+
+    .feedback.good {
+      color: #075e3b;
+      background: #e7f8ef;
+    }
+
+    .feedback.bad {
+      color: #9f1d14;
+      background: var(--red-soft);
+    }
+
+    .note-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .note {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--white);
+      padding: 16px;
+    }
+
+    .note h3 {
+      margin: 0 0 10px;
+      font-size: 1.05rem;
+    }
+
+    .note ul {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .form {
+      display: grid;
+      gap: 10px;
+    }
+
+    .form label {
+      display: grid;
+      gap: 6px;
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+
+    .form input,
+    .form textarea,
+    .form select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 12px;
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    .form textarea {
+      min-height: 96px;
+      resize: vertical;
+    }
+
+    .robot-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .robot {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--white);
+      padding: 14px;
+      min-height: 180px;
+    }
+
+    .robot svg {
+      width: 100%;
+      height: 84px;
+      display: block;
+      margin-bottom: 10px;
+      background: var(--paper);
+      border-radius: 8px;
+    }
+
+    .robot h3 {
+      margin: 0 0 6px;
+      font-size: 1rem;
+    }
+
+    .robot p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: 0.92rem;
+    }
+
+    .empty {
+      color: var(--muted);
+      border: 1px dashed var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .hero,
+      .layout,
+        .note-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+      }
+
+      .robot-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 620px) {
+      .app {
+        width: min(100% - 20px, 1180px);
+        padding-top: 14px;
+      }
+
+      .topbar,
+      .section-head {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .pill-row,
+      .filters {
+        justify-content: flex-start;
+      }
+
+      .intro,
+      .score-panel,
+      .section {
+        padding: 16px;
+      }
+
+      .score-grid,
+      .robot-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">GI</div>
+        <div>
+          <h1>공업일반 기말 퀴즈</h1>
+          <p>PPT 중심 정리 기반 학습 사이트</p>
+        </div>
+      </div>
+      <div class="pill-row" aria-label="학습 기능">
+        <span class="pill">자동 채점</span>
+        <span class="pill">오답 복습</span>
+        <span class="pill">검색 필터</span>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="panel intro">
+        <h2>시험 전에 핵심 개념을 빠르게 확인하는 공업일반 퀴즈</h2>
+        <p>생산 관리, ERP, CAD/CAM, JIT, 로봇 좌표계, 공정 기호까지 한 번에 연습할 수 있는 시험 대비 페이지야.</p>
+        <div class="quick-actions">
+          <button class="btn primary" data-jump="quiz">퀴즈 시작</button>
+          <button class="btn ghost" data-jump="summary">핵심 정리</button>
+          <button class="btn ghost" data-jump="mistakes">오답노트</button>
+        </div>
+        <div class="factory-visual" aria-label="공장 생산 라인 그림">
+          <svg viewBox="0 0 900 210" role="img">
+            <rect width="900" height="210" fill="#101828"></rect>
+            <rect x="38" y="138" width="824" height="20" rx="10" fill="#98a2b3"></rect>
+            <g fill="#d0d5dd">
+              <circle cx="120" cy="166" r="16"></circle>
+              <circle cx="250" cy="166" r="16"></circle>
+              <circle cx="380" cy="166" r="16"></circle>
+              <circle cx="510" cy="166" r="16"></circle>
+              <circle cx="640" cy="166" r="16"></circle>
+              <circle cx="770" cy="166" r="16"></circle>
+            </g>
+            <rect x="82" y="92" width="86" height="46" rx="8" fill="#1769e0"></rect>
+            <rect x="290" y="78" width="72" height="60" rx="8" fill="#0f9f6e"></rect>
+            <rect x="524" y="96" width="104" height="42" rx="8" fill="#f79009"></rect>
+            <path d="M186 46h98v92h-98z" fill="#344054"></path>
+            <path d="M203 64h20v74h-20zM245 64h20v74h-20z" fill="#98a2b3"></path>
+            <path d="M412 48h22v62h-22zM423 54l76 42-13 23-74-42z" fill="#667085"></path>
+            <circle cx="422" cy="50" r="20" fill="#d0d5dd"></circle>
+            <circle cx="504" cy="108" r="15" fill="#d0d5dd"></circle>
+            <path d="M708 42h82l26 96H682z" fill="#475467"></path>
+            <path d="M722 62h52l14 52h-79z" fill="#b8d1ff"></path>
+            <text x="42" y="38" fill="#ffffff" font-size="22" font-weight="800">JIT · ERP · CAD/CAM · FMS</text>
+          </svg>
+        </div>
+      </div>
+
+      <aside class="panel score-panel">
+        <div>
+          <h2>오늘의 점검</h2>
+          <p style="color: var(--muted); line-height: 1.55; margin: 6px 0 0;">답을 확인하면 점수와 진행률이 저장돼. 새로 열어도 이어서 볼 수 있어.</p>
+        </div>
+        <div class="score-grid">
+          <div class="metric"><strong id="scoreText">0%</strong><span>현재 점수</span></div>
+          <div class="metric"><strong id="doneText">0/0</strong><span>채점 완료</span></div>
+        </div>
+        <div class="progress"><div class="bar" id="progressBar"></div></div>
+        <button class="btn primary" id="checkAll">전체 채점</button>
+        <button class="btn ghost" id="resetQuiz">다시 풀기</button>
+      </aside>
+    </section>
+
+    <div class="layout">
+      <nav class="panel sidebar" aria-label="학습 메뉴">
+        <div class="tab-list">
+          <button class="tab active" data-section="quiz">퀴즈</button>
+          <button class="tab" data-section="summary">핵심 정리</button>
+          <button class="tab" data-section="robots">로봇 좌표계</button>
+          <button class="tab" data-section="mistakes">오답노트</button>
+        </div>
+        <div class="tip-card">
+          <h3>추천 사용법</h3>
+          <p>먼저 전체 문제를 풀고, 오답노트에서 틀린 개념만 다시 확인하면 복습 시간이 줄어들어.</p>
+        </div>
+      </nav>
+
+      <main class="panel">
+        <section class="section active" id="quiz">
+          <div class="section-head">
+            <h2>기말 대비 문제</h2>
+            <div class="filters">
+              <button class="btn ghost" data-filter="all">전체</button>
+              <button class="btn ghost" data-filter="choice">객관식</button>
+              <button class="btn ghost" data-filter="ox">OX</button>
+              <button class="btn ghost" data-filter="short">단답형</button>
+              <button class="btn ghost" data-filter="wrong">틀린 문제</button>
+            </div>
+          </div>
+          <label style="display:block; margin-bottom:14px;">
+            <span style="display:block; color: var(--muted); font-weight:800; font-size:0.9rem; margin-bottom:6px;">문제 검색</span>
+            <input class="text-answer" id="searchInput" placeholder="예: ERP, JIT, 공정 기호, 로봇">
+          </label>
+          <div class="quiz-list" id="quizList"></div>
+        </section>
+
+        <section class="section" id="summary">
+          <div class="section-head">
+            <h2>핵심 정리</h2>
+          </div>
+          <div class="note-grid">
+            <article class="note">
+              <h3>생산 방식</h3>
+              <ul>
+                <li>주문 생산: 고객 주문에 따라 생산, 선박·항공기·건물 등</li>
+                <li>계획 생산: 수요 예측 후 동일 제품을 대량 생산, 구두·셔츠·양말 등</li>
+                <li>다품종 소량 생산: 소비자 욕구가 다양할 때 여러 제품을 조금씩 생산</li>
+              </ul>
+            </article>
+            <article class="note">
+              <h3>생산 관리 3S</h3>
+              <ul>
+                <li>표준화: 크기, 형태, 품질 등을 기준에 맞게 통일</li>
+                <li>전문화: 작업자의 전문성 향상으로 능률·비용·안전 개선</li>
+                <li>단순화: 불필요한 품목을 줄여 가짓수를 단순하게 함</li>
+              </ul>
+            </article>
+            <article class="note">
+              <h3>시스템과 자동화</h3>
+              <ul>
+                <li>ERP: 기업 전체의 인적·물적 자원을 통합 관리</li>
+                <li>CAD: 컴퓨터를 이용한 설계</li>
+                <li>CAM: 설계 데이터를 바탕으로 제조·가공</li>
+                <li>CIM: 설계부터 판매까지 정보를 유기적으로 연결</li>
+              </ul>
+            </article>
+            <article class="note">
+              <h3>배치와 관리</h3>
+              <ul>
+                <li>제품별 배치: 소품종 대량 생산, 자동화 쉬움, 라인 정지 위험</li>
+                <li>공정별 배치: 변화 대응이 좋고 기계 가동률이 높지만 이동이 복잡</li>
+                <li>JIT: 필요한 만큼 생산, 낭비 제거, 재고 최소화</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="robots">
+          <div class="section-head">
+            <h2>로봇 좌표계</h2>
+          </div>
+          <div class="robot-grid">
+            <article class="robot">
+              <svg viewBox="0 0 220 120" aria-hidden="true">
+                <path d="M32 94h150" stroke="#98a2b3" stroke-width="8" stroke-linecap="round"></path>
+                <path d="M64 28v66M64 28h78M142 28v44" stroke="#1769e0" stroke-width="12" stroke-linecap="round"></path>
+                <rect x="126" y="70" width="34" height="22" rx="5" fill="#0f9f6e"></rect>
+              </svg>
+              <h3>직각 좌표형</h3>
+              <p>가로, 세로, 높이의 3차원 공간에서 작업이 가능하다.</p>
+            </article>
+            <article class="robot">
+              <svg viewBox="0 0 220 120" aria-hidden="true">
+                <ellipse cx="102" cy="92" rx="62" ry="14" fill="#d0d5dd"></ellipse>
+                <path d="M102 92V38" stroke="#1769e0" stroke-width="12" stroke-linecap="round"></path>
+                <path d="M102 42c34 2 57 17 66 42" fill="none" stroke="#0f9f6e" stroke-width="10" stroke-linecap="round"></path>
+                <circle cx="102" cy="38" r="14" fill="#f79009"></circle>
+              </svg>
+              <h3>원통 좌표형</h3>
+              <p>허리처럼 회전하며 옆 방향 작업을 수행한다.</p>
+            </article>
+            <article class="robot">
+              <svg viewBox="0 0 220 120" aria-hidden="true">
+                <path d="M54 96L94 48l72-18" stroke="#1769e0" stroke-width="12" stroke-linecap="round"></path>
+                <path d="M94 48c40 10 64 30 74 58" fill="none" stroke="#d92d20" stroke-width="8" stroke-linecap="round"></path>
+                <circle cx="94" cy="48" r="16" fill="#d0d5dd"></circle>
+              </svg>
+              <h3>극 좌표형</h3>
+              <p>팔이 대포 포신처럼 움직이며 동작 영역이 넓다.</p>
+            </article>
+            <article class="robot">
+              <svg viewBox="0 0 220 120" aria-hidden="true">
+                <path d="M54 96l32-42 42 20 34-42" stroke="#1769e0" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"></path>
+                <circle cx="86" cy="54" r="13" fill="#f79009"></circle>
+                <circle cx="128" cy="74" r="13" fill="#0f9f6e"></circle>
+                <circle cx="162" cy="32" r="13" fill="#d0d5dd"></circle>
+              </svg>
+              <h3>수직 관절형</h3>
+              <p>모든 방향으로 자유롭게 움직여 용도가 다양하다.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="mistakes">
+          <div class="section-head">
+            <h2>오답노트</h2>
+            <button class="btn ghost" data-jump="quiz">문제 다시 풀기</button>
+          </div>
+          <div class="quiz-list" id="mistakeList"></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+      { id: 1, type: "choice", q: "고객의 주문에 따라 생산이 이루어지는 방식은?", choices: ["계획 생산", "주문 생산", "대량 생산", "연속 생산"], answer: "주문 생산", note: "주문 생산은 수주 생산이라고도 한다." },
+      { id: 2, type: "choice", q: "시장의 수요를 예측하여 동일한 제품을 대량으로 생산하는 방식은?", choices: ["주문 생산", "프로젝트 생산", "계획 생산", "개별 생산"], answer: "계획 생산", note: "계획 생산은 예측 생산이며 기성품 생산에 가깝다." },
+      { id: 3, type: "choice", q: "생산 관리의 합리화 원칙 3S에 해당하지 않는 것은?", choices: ["표준화", "전문화", "단순화", "자동화"], answer: "자동화", note: "3S는 표준화, 전문화, 단순화이다." },
+      { id: 4, type: "choice", q: "포드 시스템의 핵심 특징으로 알맞은 것은?", choices: ["이동 조립법", "주문 설계 생산", "다품종 소량 생산", "수작업 중심 생산"], answer: "이동 조립법", note: "컨베이어 시스템을 활용한 이동 조립법이 핵심이다." },
+      { id: 5, type: "choice", q: "ERP의 설명으로 알맞은 것은?", choices: ["컴퓨터를 이용한 제품 설계 시스템", "기업 내 자원을 통합 관리하는 시스템", "설계 데이터를 바탕으로 가공하는 시스템", "작업물의 저장 방식"], answer: "기업 내 자원을 통합 관리하는 시스템", note: "ERP는 전사적 자원 관리 시스템이다." },
+      { id: 6, type: "choice", q: "JIT의 핵심 내용이 아닌 것은?", choices: ["필요한 만큼 생산", "낭비 요소 제거", "재고 최소화", "재고 대량 확보"], answer: "재고 대량 확보", note: "JIT는 재고를 최소화하는 방식이다." },
+      { id: 7, type: "choice", q: "CAD에 대한 설명으로 옳은 것은?", choices: ["컴퓨터로 제품을 설계한다", "제품을 자동 운반한다", "기업 전체 자원을 통합한다", "재고만 관리한다"], answer: "컴퓨터로 제품을 설계한다", note: "CAD는 컴퓨터 이용 설계이다." },
+      { id: 8, type: "choice", q: "CAM에 대한 설명으로 옳은 것은?", choices: ["시장 수요를 예측한다", "설계 데이터를 바탕으로 제조 및 가공한다", "작업자 위치를 이동한다", "마케팅 정보를 작성한다"], answer: "설계 데이터를 바탕으로 제조 및 가공한다", note: "CAM은 컴퓨터 이용 제조이다." },
+      { id: 9, type: "ox", q: "주문 생산은 제품 종류가 다양하고 가격이 비싼 경우가 많다.", answer: "O", note: "선박, 항공기, 건물 등이 예이다." },
+      { id: 10, type: "ox", q: "제품별 배치는 다품종 소량 생산에 가장 적합하다.", answer: "X", note: "제품별 배치는 소품종 대량 생산에 적합하다." },
+      { id: 11, type: "ox", q: "공정별 배치는 생산 제품 변화에 융통성 있게 대처할 수 있다.", answer: "O", note: "유사 설비를 모아 두기 때문에 변화 대응이 좋다." },
+      { id: 12, type: "ox", q: "선입 선출법은 나중에 입고된 자재를 먼저 출고하는 방법이다.", answer: "X", note: "먼저 입고된 자재를 먼저 출고한다." },
+      { id: 13, type: "short", q: "생산 관리의 목표 중 시장 변화와 수요 변동에 빠르게 대응하는 능력은?", answer: "유연성", note: "Flexibility, 즉 유연성이다." },
+      { id: 14, type: "short", q: "공정 기호 □가 의미하는 것은?", answer: "검사", note: "작업물의 품질이나 수량 확인이다." },
+      { id: 15, type: "short", q: "공정 기호 ○가 의미하는 것은?", answer: "가공", note: "원재료의 모양이나 성질을 변화시키는 작업이다." },
+      { id: 16, type: "short", q: "컴퓨터 통합 제조의 영어 약자는?", answer: "CIM", note: "Computer Integrated Manufacturing의 약자이다." },
+      { id: 17, type: "short", q: "기업이 제품 생산에 필요한 원자재를 유리한 조건으로 확보하는 활동은?", answer: "구매 관리", note: "구매 관리는 적절한 공급원과 조건을 중요하게 본다." },
+      { id: 18, type: "short", q: "자재 저장 원칙 중 먼저 입고된 자재를 먼저 출고하는 방법은?", answer: "선입 선출법", note: "자재의 노후화나 변질을 방지한다." }
+    ];
+
+    const quizList = document.querySelector("#quizList");
+    const mistakeList = document.querySelector("#mistakeList");
+    const searchInput = document.querySelector("#searchInput");
+    const scoreText = document.querySelector("#scoreText");
+    const doneText = document.querySelector("#doneText");
+    const progressBar = document.querySelector("#progressBar");
+    const storageKey = "industrialQuiz:progress";
+    const answers = new Map(JSON.parse(localStorage.getItem(storageKey) || "[]"));
+    let currentFilter = "all";
+    let currentSearch = "";
+
+    function normalize(value) {
+      return String(value || "").trim().replace(/\s+/g, "").toLowerCase();
+    }
+
+    function saveProgress() {
+      localStorage.setItem(storageKey, JSON.stringify([...answers.entries()]));
+    }
+
+    function answerMatches(item, query) {
+      const text = [item.q, item.answer, item.note, ...(item.choices || [])].join(" ");
+      return normalize(text).includes(normalize(query));
+    }
+
+    function getVisibleQuestions() {
+      return questions.filter((item) => {
+        const matchesFilter = currentFilter === "all"
+          || item.type === currentFilter
+          || (currentFilter === "wrong" && answers.get(item.id) === false);
+        return matchesFilter && answerMatches(item, currentSearch);
+      });
+    }
+
+    function renderQuiz(filter = currentFilter) {
+      currentFilter = filter;
+      quizList.innerHTML = "";
+      const visibleQuestions = getVisibleQuestions();
+
+      if (!visibleQuestions.length) {
+        quizList.innerHTML = `<div class="empty">조건에 맞는 문제가 없어. 검색어를 바꾸거나 전체 문제를 눌러봐.</div>`;
+        return;
+      }
+
+      visibleQuestions.forEach((item) => {
+          const card = document.createElement("article");
+          card.className = "question";
+          card.dataset.type = item.type;
+          card.dataset.id = item.id;
+
+          const label = item.type === "choice" ? "객관식" : item.type === "ox" ? "OX" : "단답형";
+          const saved = answers.has(item.id);
+          const savedCorrect = answers.get(item.id);
+          const savedFeedback = saved
+            ? `<div class="feedback show ${savedCorrect ? "good" : "bad"}" id="feedback-${item.id}">${savedCorrect ? "정답!" : `오답. 정답은 "${item.answer}"이야.`} ${item.note}</div>`
+            : `<div class="feedback" id="feedback-${item.id}"></div>`;
+          const choices = item.type === "short"
+            ? `<input class="text-answer" aria-label="답 입력" placeholder="정답 입력">`
+            : `<div class="choices">${(item.type === "ox" ? ["O", "X"] : item.choices).map((choice) => `
+                <label class="choice">
+                  <input type="radio" name="q-${item.id}" value="${choice}">
+                  <span>${choice}</span>
+                </label>`).join("")}</div>`;
+
+          card.innerHTML = `
+            <div class="question-header">
+              <h3>${item.id}. ${item.q}</h3>
+              <span class="tag">${label}</span>
+            </div>
+            ${choices}
+            <div style="display:flex; gap:8px; margin-top:12px; flex-wrap:wrap;">
+              <button class="btn primary" data-check="${item.id}">정답 확인</button>
+            </div>
+            ${savedFeedback}
+          `;
+          quizList.appendChild(card);
+        });
+      renderMistakes();
+    }
+
+    function getAnswer(id) {
+      const question = document.querySelector(`.question[data-id="${id}"]`);
+      const item = questions.find((entry) => entry.id === Number(id));
+      if (!question || !item) return "";
+      if (item.type === "short") return question.querySelector("input").value;
+      const checked = question.querySelector("input:checked");
+      return checked ? checked.value : "";
+    }
+
+    function checkQuestion(id) {
+      const item = questions.find((entry) => entry.id === Number(id));
+      const feedback = document.querySelector(`#feedback-${id}`);
+      if (!item || !feedback) return false;
+
+      const userAnswer = getAnswer(id);
+      const correct = normalize(userAnswer) === normalize(item.answer);
+      answers.set(Number(id), correct);
+      saveProgress();
+      feedback.className = `feedback show ${correct ? "good" : "bad"}`;
+      feedback.textContent = correct
+        ? `정답! ${item.note}`
+        : `아쉬워. 정답은 "${item.answer}"이야. ${item.note}`;
+      updateScore();
+      renderMistakes();
+      return correct;
+    }
+
+    function updateScore() {
+      const checkedCount = answers.size;
+      const rightCount = [...answers.values()].filter(Boolean).length;
+      const score = checkedCount ? Math.round((rightCount / checkedCount) * 100) : 0;
+      scoreText.textContent = `${score}%`;
+      doneText.textContent = `${checkedCount}/${questions.length}`;
+      progressBar.style.width = `${Math.round((checkedCount / questions.length) * 100)}%`;
+    }
+
+    function showSection(id) {
+      document.querySelectorAll(".section").forEach((section) => section.classList.toggle("active", section.id === id));
+      document.querySelectorAll(".tab").forEach((tab) => tab.classList.toggle("active", tab.dataset.section === id));
+      document.querySelector("main").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function renderMistakes() {
+      const wrongQuestions = questions.filter((item) => answers.get(item.id) === false);
+      mistakeList.innerHTML = wrongQuestions.length
+        ? wrongQuestions.map((item) => `
+          <article class="question">
+            <div class="question-header">
+              <h3>${item.id}. ${item.q}</h3>
+              <span class="tag">오답</span>
+            </div>
+            <p style="margin:0; color:var(--muted); line-height:1.6;">
+              정답: <strong style="color:var(--ink);">${item.answer}</strong><br>
+              ${item.note}
+            </p>
+          </article>`).join("")
+        : `<div class="empty">아직 틀린 문제가 없어. 문제를 풀고 채점하면 여기에 자동으로 모여.</div>`;
+    }
+
+    document.addEventListener("click", (event) => {
+      const checkButton = event.target.closest("[data-check]");
+      const tab = event.target.closest("[data-section]");
+      const jump = event.target.closest("[data-jump]");
+      const filter = event.target.closest("[data-filter]");
+
+      if (checkButton) checkQuestion(checkButton.dataset.check);
+      if (tab) showSection(tab.dataset.section);
+      if (jump) showSection(jump.dataset.jump);
+      if (filter) renderQuiz(filter.dataset.filter);
+    });
+
+    searchInput.addEventListener("input", (event) => {
+      currentSearch = event.target.value;
+      renderQuiz();
+    });
+
+    document.querySelector("#checkAll").addEventListener("click", () => {
+      questions.forEach((item) => {
+        const visible = document.querySelector(`.question[data-id="${item.id}"]`);
+        if (visible) checkQuestion(item.id);
+      });
+    });
+
+    document.querySelector("#resetQuiz").addEventListener("click", () => {
+      answers.clear();
+      saveProgress();
+      renderQuiz();
+      updateScore();
+    });
+
+    renderQuiz();
+    renderMistakes();
+    updateScore();
+  </script>
+</body>
+</html>
